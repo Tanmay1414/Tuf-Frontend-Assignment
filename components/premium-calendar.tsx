@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Plus, Sparkles, X } from 'lucide-react';
 
 interface DateRange {
@@ -97,7 +97,26 @@ export default function PremiumCalendar() {
     { heading: 'Q4 budget review', description: 'Prepare financial models and projections for board meeting.', date: '2026-04-18' },
     { heading: 'Client presentation', description: 'Finalize slide deck and practice product demo.', date: '2026-04-22' }
   ]);
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+
+  useEffect(() => {
+    const savedNotes = localStorage.getItem('calendar_notes');
+    if (savedNotes) {
+      try {
+        setNotes(JSON.parse(savedNotes));
+      } catch (e) {
+        console.error("Failed to parse notes", e);
+      }
+    }
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem('calendar_notes', JSON.stringify(notes));
+    }
+  }, [notes, isLoaded]);
   const [newNote, setNewNote] = useState<Note>({ heading: '', description: '', date: '' });
 
   const today = new Date();
@@ -162,12 +181,12 @@ export default function PremiumCalendar() {
   }
 
   function handleAddNote() {
-    if (newNote.heading.trim() && newNote.description.trim() && newNote.date) {
+    if (newNote.heading.trim() && newNote.date) {
       setNotes([...notes, newNote]);
       setNewNote({ heading: '', description: '', date: '' });
       setIsNoteModalOpen(false);
     } else {
-      alert("Please fill in all fields");
+      alert("Please fill in the heading and date");
     }
   }
 
@@ -546,7 +565,7 @@ export default function PremiumCalendar() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-neutral-700 mb-1">Description</label>
+                <label className="block text-sm font-medium text-neutral-700 mb-1">Description <span className="text-neutral-400 font-normal">(Optional)</span></label>
                 <textarea 
                   value={newNote.description}
                   onChange={(e) => setNewNote({...newNote, description: e.target.value})}
