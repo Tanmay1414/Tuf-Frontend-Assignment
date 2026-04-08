@@ -3,8 +3,8 @@
 A polished, high-fidelity React/Next.js calendar component inspired by the tactile aesthetic of a physical wall calendar. Built as a responsive, interactive web component with integrated date-range selection and persistent note-taking functionality.
 
 ### 🔗 Quick Links
-* **[Live Demo](#) <!-- Add your Vercel/Netlify link here -->**
-* **[Video Walkthrough](#) <!-- Add your Loom/YouTube link here -->**
+* **[Live Demo](https://tuf-frontend-assignment-fawn.vercel.app/)**
+* **[Video Walkthrough](https://drive.google.com/file/d/1bH87IQ8vyAEiuXifYT-_Tg5U1F4FW44n/view?usp=sharing)**
 
 ---
 
